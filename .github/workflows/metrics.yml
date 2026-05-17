@@ -1,108 +1,52 @@
 name: Metrics
-
 on:
-  schedule:
-    - cron: "0 */12 * * *"
+  schedule: [{cron: "0 */12 * * *"}]
   workflow_dispatch:
-  push:
-    branches: ["master", "main"]
+  push: {branches: ["master", "main"]}
 
 jobs:
   github-metrics:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
-
     steps:
-      - name: Terminal profile
-        uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@latest
         with:
-          filename: github-metrics.svg
           token: ${{ secrets.METRICS_TOKEN }}
           user: darkoss1
-
           template: terminal
-          base: header, activity, repositories, metadata
-
-          config_timezone: Africa/Casablanca
-          config_padding: 5%
-          config_output: svg
-
-          extras_css: |
-            .terminal {
-              background: #0d1117 !important;
-              border: 1px solid #30363d !important;
-              box-shadow: none !important;
-            }
-
-            .terminal-header {
-              background: #161b22 !important;
-              border-bottom: 1px solid #30363d !important;
-            }
-
-            .terminal-title {
-              color: #c9d1d9 !important;
-            }
-
-            .command {
-              color: #7ee787 !important;
-              font-weight: 700 !important;
-            }
-
-            .field {
-              color: #79c0ff !important;
-            }
-
-            .value {
-              color: #c9d1d9 !important;
-            }
-
-            text {
-              font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace !important;
-            }
-
-      - name: Languages
-        uses: lowlighter/metrics@latest
-        with:
-          filename: github-languages.svg
-          token: ${{ secrets.METRICS_TOKEN }}
-          user: darkoss1
-
-          template: terminal
-          base: ""
-
-          config_timezone: Africa/Casablanca
-          config_padding: 5%
-          config_output: svg
-
+          base: header, activity, community, repositories, metadata
+          config_padding: 6%
           plugin_languages: yes
           plugin_languages_colors: github
           plugin_languages_details: percentage
-          plugin_languages_limit: 6
-          plugin_languages_threshold: 0%
-
           extras_css: |
-            .terminal {
+            svg {
               background: #0d1117 !important;
-              border: 1px solid #30363d !important;
+            }
+
+            .terminal,
+            .terminal-body,
+            .terminal-content,
+            .window,
+            .window-body {
+              background: #0d1117 !important;
+              fill: #0d1117 !important;
               box-shadow: none !important;
             }
 
-            .terminal-header {
+            .terminal-header,
+            .window-header {
               background: #161b22 !important;
-              border-bottom: 1px solid #30363d !important;
+              fill: #161b22 !important;
             }
 
             .terminal-title {
               color: #c9d1d9 !important;
+              fill: #c9d1d9 !important;
             }
 
             .command {
               color: #7ee787 !important;
-              font-weight: 700 !important;
-            }
-
-            text {
-              font-family: "JetBrains Mono", "SFMono-Regular", "Consolas", "Liberation Mono", monospace !important;
+              fill: #7ee787 !important;
             }
